@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Data Structures Helper</title>
-    <link rel="stylesheet" href="./output.css" />
+    <title>Tree Structure Visualizer</title>
+    <link rel="stylesheet" href="/DSVis/output.css" />
+    <script type="module" crossorigin src="/DSVis/assets/index-DtGtGqN9.js"></script>
   </head>
-  <body class="bg-base-200 min-h-screen flex flex-col">
+  <body class="text-base-content min-h-screen flex flex-col justify-center">
     <nav
       class="navbar bg-primary text-primary-content shadow-lg absolute top-0 z-50"
     >
@@ -33,10 +34,6 @@
               tabindex="0"
               class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-primary rounded-box w-52"
             >
-              <li><a href="./tree.html">Trees</a></li>
-              <li><a href="./linked-lists.html">Linked Lists</a></li>
-              <li><a href="./stacks.html">Stacks</a></li>
-              <li><a href="./queues.html">Queues</a></li>
               <li>
                 <a href="https://github.com/WilkBob/DSVis" target="_blank"
                   >GitHub</a
@@ -48,10 +45,6 @@
         </div>
         <div class="navbar-end hidden lg:flex">
           <ul class="menu menu-horizontal px-1">
-            <li><a href="./tree.html">Tree</a></li>
-            <li><a href="./linked-lists.html">Linked Lists</a></li>
-            <li><a href="./stacks.html">Stacks</a></li>
-            <li><a href="./queues.html">Queues</a></li>
             <li>
               <a target="_blank" href="https://github.com/WilkBob/DSVis"
                 >GitHub</a
@@ -62,68 +55,230 @@
       </div>
     </nav>
 
-    <main class="container mx-auto px-4 mt-20 flex-grow">
-      <h1 class="text-5xl font-bold text-center mb-8">
-        Data Structures Helper
+    <div class="container mt-20 bg-base-300 mx-auto p-4 rounded-box">
+      <h1 class="text-3xl font-bold text-center mb-6">
+        Tree Structure Visualizer
       </h1>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <a
-          href="./stacks.html"
-          class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300"
-        >
-          <div class="card-body">
-            <h2 class="card-title text-2xl">Stacks (Under Construction)</h2>
-            <p>Explore and visualize stack operations</p>
-            <div class="card-actions justify-end">
-              <button class="btn btn-primary">Learn More</button>
-            </div>
-          </div>
-        </a>
-        <a
-          href="./queues.html"
-          class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300"
-        >
-          <div class="card-body">
-            <h2 class="card-title text-2xl">Queues (Under Construction)</h2>
-            <p>Understand queue data structure and its applications</p>
-            <div class="card-actions justify-end">
-              <button class="btn btn-primary">Learn More</button>
-            </div>
-          </div>
-        </a>
-        <a
-          href="./linked-lists.html"
-          class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300"
-        >
-          <div class="card-body">
-            <h2 class="card-title text-2xl">
-              Linked Lists (Under Construction)
-            </h2>
-            <p>Dive into the world of linked data structures</p>
-            <div class="card-actions justify-end">
-              <button class="btn btn-primary">Learn More</button>
-            </div>
-          </div>
-        </a>
-        <a
-          href="./tree.html"
-          class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300"
-        >
-          <div class="card-body">
-            <h2 class="card-title text-2xl">Trees</h2>
-            <p>Explore hierarchical data structures and algorithms</p>
-            <div class="card-actions justify-end">
-              <button class="btn btn-primary">Learn More</button>
-            </div>
-          </div>
-        </a>
-      </div>
-    </main>
+      <p class="text-center mb-6">
+        This is a simple tree structure visualizer that allows you to see how
+        different versions of traversal navigate through a tree structure.
+      </p>
 
-    <footer class="footer footer-center p-4 bg-base-300 text-base-content">
-      <div>
-        <p>Copyright © 2023 - All rights reserved by DataVis</p>
+      <div class="bg-base-200 rounded-box shadow-xl md:p-6">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="md:w-1/4">
+            <div class="space-y-4">
+              <div>
+                <h2 class="text-lg font-semibold">
+                  Traverse -
+                  <span class="text-primary text-sm"
+                    >click to choose an order</span
+                  >
+                </h2>
+                <hr class="mb-2 border-dashed border-primary" />
+                <div class="btn-group">
+                  <button
+                    id="pre-traverse"
+                    class="btn btn-sm w-full my-1 btn-outline"
+                  >
+                    Pre-Order
+                  </button>
+                  <button
+                    id="in-traverse"
+                    class="btn btn-sm w-full my-1 btn-outline"
+                  >
+                    In-Order
+                  </button>
+                  <button
+                    id="post-traverse"
+                    class="btn btn-sm w-full my-1 btn-outline"
+                  >
+                    Post-Order
+                  </button>
+                  <button
+                    id="level-traverse"
+                    class="btn btn-sm w-full my-1 btn-outline"
+                  >
+                    Level-Order (BFS)
+                  </button>
+                </div>
+              </div>
+              <div class="hidden md:block">
+                <h2 class="text-lg font-semibold mb-2">
+                  Depth --
+                  <span class="text-sm text-primary"
+                    >control tree's "height" <sup>(1-4)</sup></span
+                  >
+                </h2>
+                <hr class="my-2 border-dashed border-primary" />
+                <div class="flex justify-between">
+                  <button
+                    class="btn btn-circle btn-sm btn-outline subtract-depth"
+                  >
+                    -
+                  </button>
+                  <span id="" class="self-center depth-counter">Depth: 3</span>
+                  <button class="btn btn-circle btn-sm btn-outline add-depth">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="md:w-3/4">
+            <div
+              id="tree-container"
+              class="bg-base-100 rounded-box p-4 h-[500px] flex items-center justify-center"
+            ></div>
+          </div>
+          <div class="md:hidden">
+            <h2 class="text-lg font-semibold mb-2">
+              Depth Control -
+              <span class="text-sm text-primary"
+                >control "height" <sup>(1-4)</sup></span
+              >
+            </h2>
+            <hr class="my-2 border-dashed border-primary" />
+            <div
+              class="flex justify-between m-4 p-5 bg-base-300 rounded-box text-xl"
+            >
+              <button class="btn btn-circle btn-sm subtract-depth">-</button>
+              <span class="self-center depth-counter">Depth: 3</span>
+              <button class="btn btn-circle btn-sm add-depth">+</button>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+    <div class="container mt-4 mx-auto p-2">
+      <h2 class="text-2xl font-bold mt-6">What is a tree?</h2>
+      <p class="mt-4">
+        A tree is a non-linear data structure that consists of nodes connected
+        by edges. The top node is called the root node, and each node can have
+        zero or more child nodes. The nodes without any children are called leaf
+        nodes. Trees have many applications, including representing the DOM in
+        web development, file systems, and search algorithms like binary search
+        trees.
+      </p>
+
+      <h2 class="text-2xl font-bold mt-6">What is traversal?</h2>
+      <p class="mt-4">
+        Traversal is the process of visiting all the nodes in a tree data
+        structure. There are different ways to traverse a tree, and the most
+        common ones are pre-order, in-order, post-order, and level-order
+        traversal.
+      </p>
+
+      <h2 class="text-2xl font-bold mt-6">How does traversal work?</h2>
+      <p class="mt-4">
+        Traversal works by visiting each node in a tree structure and
+        recursively traversing through the left and right subtrees. The order in
+        which the nodes are visited depends on the type of traversal being used.
+      </p>
+      <h2 class="text-2xl font-bold mt-6">Different types of traversal</h2>
+    </div>
+
+    <div class="container mt-4 mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Pre-Order Traversal Card -->
+      <div class="card bg-base-300 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">Pre-Order Traversal</h2>
+          <p>
+            Pre-order traversal visits the root node first, then the left
+            subtree, and finally the right subtree.
+          </p>
+          <div class="mockup-code">
+            <pre data-prefix="1"><code>// Pre-order traversal</code></pre>
+            <pre data-prefix="2"><code>function preOrder(root) {</code></pre>
+            <pre data-prefix="3"><code>  if (!root) return;</code></pre>
+            <pre data-prefix="4"><code>  console.log(root.value);</code></pre>
+            <pre data-prefix="5"><code>  preOrder(root.left);</code></pre>
+            <pre data-prefix="6"><code>  preOrder(root.right);</code></pre>
+            <pre data-prefix="7"><code>}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- In-Order Traversal Card -->
+      <div class="card bg-base-300 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">In-Order Traversal</h2>
+          <p>
+            In-order traversal visits the left subtree first, then the root
+            node, and finally the right subtree.
+          </p>
+          <div class="mockup-code">
+            <pre data-prefix="1"><code>// In-order traversal</code></pre>
+            <pre data-prefix="2"><code>function inOrder(root) {</code></pre>
+            <pre data-prefix="3"><code>  if (!root) return;</code></pre>
+            <pre data-prefix="4"><code>  inOrder(root.left);</code></pre>
+            <pre data-prefix="5"><code>  console.log(root.value);</code></pre>
+            <pre data-prefix="6"><code>  inOrder(root.right);</code></pre>
+            <pre data-prefix="7"><code>}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Post-Order Traversal Card -->
+      <div class="card bg-base-300 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">Post-Order Traversal</h2>
+          <p>
+            Post-order traversal visits the left subtree, then the right
+            subtree, and finally the root node.
+          </p>
+          <div class="mockup-code">
+            <pre data-prefix="1"><code>// Post-order traversal</code></pre>
+            <pre data-prefix="2"><code>function postOrder(root) {</code></pre>
+            <pre data-prefix="3"><code>  if (!root) return;</code></pre>
+            <pre data-prefix="4"><code>  postOrder(root.left);</code></pre>
+            <pre data-prefix="5"><code>  postOrder(root.right);</code></pre>
+            <pre data-prefix="6"><code>  console.log(root.value);</code></pre>
+            <pre data-prefix="7"><code>}</code></pre>
+          </div>
+        </div>
+      </div>
+      <!-- Level-Order Traversal Card -->
+      <div class="card bg-base-300 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">Level-Order Traversal (BFS)</h2>
+          <p>
+            Level-order traversal visits the nodes level by level, starting from
+            the root node. It makes use of a queue to keep track of the nodes.
+            This is also known as Breadth-First Search (BFS).
+          </p>
+          <div class="mockup-code">
+            <pre data-prefix="1"><code>// Level-order traversal</code></pre>
+            <pre data-prefix="2"><code>function levelOrder(root) {</code></pre>
+            <pre data-prefix="3"><code>  if (!root) return [];</code></pre>
+            <pre
+              data-prefix="4"
+            ><code>  let queue = [root], result = [];</code></pre>
+            <pre data-prefix="5"><code>  while (queue.length) {</code></pre>
+            <pre
+              data-prefix="6"
+            ><code>    let node = queue.shift();</code></pre>
+            <pre data-prefix="7"><code>    result.push(node.value);</code></pre>
+            <pre
+              data-prefix="8"
+            ><code>    if (node.left) queue.push(node.left);</code></pre>
+            <pre
+              data-prefix="9"
+            ><code>    if (node.right) queue.push(node.right);</code></pre>
+            <pre data-prefix="10"><code>  }</code></pre>
+            <pre data-prefix="11"><code>  return result;</code></pre>
+            <pre data-prefix="12"><code>}</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="p-4 bg-base-300 text-center mt-4">
+      <p>
+        Made with ❤️ by
+        <a href="https://bob-the-dev.web.app" class="text-primary font-semibold"
+          >Bob</a
+        >
+      </p>
     </footer>
   </body>
 </html>
